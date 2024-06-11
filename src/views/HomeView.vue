@@ -3,7 +3,6 @@ import { ref, reactive, onMounted, onUnmounted } from 'vue';
 
 const siteInfo = reactive({
   title :'Currency Convert',
-  picture: './public/logo.jpg',
   background:'#19376D'
 
 })
@@ -50,7 +49,7 @@ function convert() {
     <div class="col-8 mx-auto px-2 py-5 my-5 overflow-hidden position-relative rounded-2" :style="{background:siteInfo.background }">
     
       <div style="background:#A0153E;" class="p-3 fw-bold text-white rounded-1 position-absolute end-0 top-0">DATE : {{ result.date_to }}</div>
-      <img :src="siteInfo.picture" class="d-block rounded-1 mx-auto mb-4" alt="" width="180" height="120">
+      <img src="@/assets/image/logo.jpg" class="d-block rounded-1 mx-auto mb-4" alt="" width="180" height="120">
       <h1 class="display-5 text-primary mb-4 text-center fw-bold">{{ siteInfo.title }} Vue Js</h1>
       <div class="col-lg-10 mx-auto">
         <div class="mb-3">
