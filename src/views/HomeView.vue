@@ -7,7 +7,21 @@ const siteInfo = reactive({
 
 })
 
+// clock time start
+const time = ref("00:00:00")
+onMounted(()=>{
+  setInterval(()=>{
+    const newTime = new Date()
+    time.value = newTime.toLocaleTimeString()
+  },500)
+})
+// clock time end
 
+// current date start
+const defaultDate =ref(new Date().toISOString().substring(0, 10))
+// current date end
+
+// currency data
 const currency = reactive({
   date:"2024-06-11",
   to: 'AFN',
@@ -15,21 +29,23 @@ const currency = reactive({
   amount: 1,
 })
 
+// result data
 const result = reactive({
   value_data:0,
   date_to: currency.date,
 })
 
+
+// date change show
 function date(e) {
   currency.date = e.target.value.toString()
   result.date_to = currency.date
+  defaultDate.value = e.target.value.toString()
 }
 
-const defaultDate =new Date().toISOString().substring(0, 10)
 
-
+// convert fatch api start 
 function convert() {
-
   axios.get(`https://api.fxratesapi.com/convert?date=${currency.date}&from=${currency.form}&to=${currency.to}&amount=${currency.amount}`)
     .then((res) => {
       result.value_data = res.data.result
@@ -37,7 +53,9 @@ function convert() {
         is_result.value = 1
       }
     })
+
 }
+// convert fatch api end
 
 </script>
 
@@ -46,12 +64,13 @@ function convert() {
 
 
 
-    <div class="col-8 mx-auto px-2 py-5 my-5 overflow-hidden position-relative rounded-2" :style="{background:siteInfo.background }">
+    <div class="col-lg-8 col-md-10 col-sm-12 mx-auto px-2 py-5 my-5 overflow-hidden position-relative rounded-2" :style="{background:siteInfo.background }">
+      <div style="background:#1679AB;" class="p-3 d-lg-block d-md-block d-none fw-bold text-white rounded-1 position-absolute start-0 top-0">TIME : {{ time }}</div>
     
-      <div style="background:#A0153E;" class="p-3 fw-bold text-white rounded-1 position-absolute end-0 top-0">DATE : {{ result.date_to }}</div>
+      <div style="background:#1679AB;" class="p-3 d-lg-block d-md-block d-none fw-bold text-white rounded-1 position-absolute end-0 top-0">DATE : {{ result.date_to }}</div>
       <img src="@/assets/image/logo.jpg" class="d-block rounded-1 mx-auto mb-4" alt="" width="180" height="120">
-      <h1 class="display-5 text-primary mb-4 text-center fw-bold">{{ siteInfo.title }} Vue Js</h1>
-      <div class="col-lg-10 mx-auto">
+      <h1 class="display-5 text-primary text-uppercase mb-4 text-center fw-bold">{{ siteInfo.title }}</h1>
+      <div class="col-10 mx-auto">
         <div class="mb-3">
           <input type="date" :value="defaultDate" class="form-control" @change="date">
         </div>
